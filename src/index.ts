@@ -11,6 +11,9 @@ app.use(express.urlencoded({extended:true}));
 connectDB(mongoUrl);
 
 
+app.get('/',(req,res)=>{
+res.send("its a writing portfolio");
+});
 
 app.use('/api/user',require("./routers/user"));
 
