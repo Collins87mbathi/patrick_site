@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB(mongoUrl);
 
 app.get("/", (req, res) => {
-  res.send("its a writing portfolio");
+  res.send("Its a writing portfolio");
 });
 
 app.use("/api/user", require("./routers/user"));
@@ -19,5 +19,6 @@ app.use("/api/email",require("./routers/mail"));
 app.use(ErrorHandler);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+console.log(`Server is running on port ${port}`);
 });
+
