@@ -1,7 +1,7 @@
 import { nodeConfig } from "../nodeConfig/node.config";
 
 const {
-  env: { mongoUrl, port, secretKey },
+  env: { mongoUrl, port, secretKey,user,pass},
 } = nodeConfig;
 
-export { secretKey, mongoUrl, port };
+export { secretKey, mongoUrl, port,user,pass };

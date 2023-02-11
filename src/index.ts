@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/user", require("./routers/user"));
 app.use("/api/order", require("./routers/order"));
+app.use("/api/email",require("./routers/mail"));
 
 app.use(ErrorHandler);
 
