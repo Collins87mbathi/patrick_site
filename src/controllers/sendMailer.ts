@@ -14,7 +14,7 @@ class mailerController {
     const mailOptions = {
       from: `${req.body.email}`,
       to: "collinsmbathi@gmail.com",
-      subject: `consultation`,
+      subject: `Consultation`,
       html: `
         <div style="max-width: 700px; margin:auto; padding: 50px 20px; font-size: 110%;">
         <p>${req.body.message}</p>

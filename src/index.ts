@@ -3,9 +3,11 @@ const app: Express = express();
 import { port, mongoUrl } from "./config/config";
 import { connectDB } from "./Database/connection";
 import { ErrorHandler } from "./ErrorHandler/ErrorHandler";
+import cors from "cors";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({origin:'*'}));
 connectDB(mongoUrl);
 
 app.get("/", (req, res) => {
