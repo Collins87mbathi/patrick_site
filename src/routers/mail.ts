@@ -1,9 +1,7 @@
 import express from "express";
-import {sendMailer} from "../controllers/sendMailer";
+import { sendMailer } from "../controllers/sendMailer";
 const router = express();
 
-
-router.post('/',sendMailer);
-
+router.post("/", sendMailer);
 
 module.exports = router;
