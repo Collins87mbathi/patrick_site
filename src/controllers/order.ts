@@ -51,7 +51,7 @@ class OrderController {
     } catch (error: any) {
       next(ApiError.InternalError(error));
     }
-  };
+  }
 }
 
 export const { CreateOrder, GetOrders, UpdatedOrders, DeleteOrders } =
