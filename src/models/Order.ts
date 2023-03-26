@@ -29,6 +29,14 @@ const OrderSchema: Schema<IOrder> = new Schema({
   file: {
     type: Buffer,
   },
+  fileType: {
+    type: String,
+   
+  },
+  fileName: {
+    type: String,
+  
+  },
   isComplete: {
     type: Boolean,
     default: false,

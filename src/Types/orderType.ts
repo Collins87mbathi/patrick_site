@@ -9,4 +9,7 @@ export interface IOrder extends Document {
   price: string;
   isComplete: boolean;
   file: Buffer;
+  fileType: string;
+  fileName: string,
+  
 }
