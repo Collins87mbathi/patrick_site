@@ -13,5 +13,5 @@ router.post("/",upload.single('file'), CreateOrder);
 router.get("/", GetOrders);
 router.delete("/:id", DeleteOrders);
 router.put("/:id", UpdatedOrders);
-router.get("/:orderId/download")
+router.get("/:orderId/download",GetDownload);
 module.exports = router;
