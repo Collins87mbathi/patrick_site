@@ -1,6 +1,8 @@
 import { Schema, Model, model } from "mongoose";
 import { IOrder } from "../Types/orderType";
 
+
+
 const OrderSchema: Schema<IOrder> = new Schema({
   email: {
     type: String,
@@ -27,15 +29,7 @@ const OrderSchema: Schema<IOrder> = new Schema({
     required: true,
   },
   file: {
-    type: Buffer,
-  },
-  fileType: {
-    type: String,
-   
-  },
-  fileName: {
-    type: String,
-  
+    type: String, // or you can use Buffer if you want to store file contents in the database
   },
   isComplete: {
     type: Boolean,

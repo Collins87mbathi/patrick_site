@@ -4,12 +4,14 @@ import {
   DeleteOrders,
   GetOrders,
   UpdatedOrders,
+  GetDownload
 } from "../controllers/order";
+import {upload} from "../helpers/upload";
 const router = express.Router();
 
-router.post("/", CreateOrder);
+router.post("/",upload.single('file'), CreateOrder);
 router.get("/", GetOrders);
 router.delete("/:id", DeleteOrders);
 router.put("/:id", UpdatedOrders);
-
+router.get("/:orderId/download")
 module.exports = router;

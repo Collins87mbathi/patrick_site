@@ -2,59 +2,56 @@ import { Order } from "../models/Order";
 import { IOrder } from "../Types/orderType";
 import { IReq, IRes, INext } from "../common/index";
 import { ApiError } from "../Errors/Errors";
-
-const getFileType = (buffer: Buffer): string => {
-  if (buffer.slice(0, 4).toString() === '%PDF') {
-    return 'pdf';
-  } else if (buffer.slice(0, 4).toString() === 'PK\x03\x04') {
-    return 'zip';
-  } else if (buffer.slice(0, 2).toString() === 'BM') {
-    return 'bmp';
-  } else if (buffer.slice(0, 2).toString() === 'MZ') {
-    return 'exe';
-  } else if (buffer.slice(0, 4).toString() === '\x89PNG') {
-    return 'png';
-  } else if (buffer.slice(0, 2).toString() === 'II' || buffer.slice(0, 2).toString() === 'MM') {
-    return 'tiff';
-  } else if (buffer.slice(0, 4).toString() === 'RIFF' && buffer.slice(8, 12).toString() === 'WEBP') {
-    return 'webp';
-  } else if (buffer.slice(0, 4).toString() === 'Rar!') {
-    return 'rar';
-  } else if (buffer.slice(0, 2).toString() === 'PK') {
-    return 'docx';
-  } else {
-    return 'unknown';
-  }
-};
+import path from "path";
 
 
 class OrderController {
-  public static CreateOrder = async (req: IReq, res: IRes, next: INext) => {
+  public static CreateOrder = async (req: any, res: any, next: any) => {
     try {
       const { email, paper, level, pages, deadline, price } = req.body;
       if (!email || !paper || !level || !pages || !deadline || !price)
         return next(ApiError.NotFound("please input values"));
-        const { originalname, buffer } = req.file;
-      const fileType = getFileType(originalname); // Get file type
-      const fileName = `assignment.${fileType}`;
-
-      const order = await Order.create({
+  
+      const order = new Order({
         email,
         paper,
         level,
         pages,
         deadline,
         price,
-        file: buffer,
-        fileName
+        file: req.file.path // Add the file path to the order document
       });
+  
       await order.save();
-
+  
       res.status(200).json(order);
     } catch (error: any) {
-      next(ApiError.InternalError(error));
+      console.log(error);
     }
   };
+  
+  public static GetDownload = async (req: IReq, res: IRes, next: INext) => {
+    try {
+      try {
+        const order = await Order.findById(req.params.orderId);
+        if (!order) {
+          return res.status(404).json({ message: 'Order not found' });
+        }
+    
+        const filePath = order.file;
+        const fileName = path.basename(filePath);
+    
+        res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+        res.sendFile(filePath);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+      }
+    } catch (error: any) {
+      next(ApiError.InternalError(error.response.message));
+    }
+  };
+  
 
   public static GetOrders = async (req: IReq, res: IRes, next: INext) => {
     try {
@@ -84,5 +81,5 @@ class OrderController {
   }
 }
 
-export const { CreateOrder, GetOrders, UpdatedOrders, DeleteOrders } =
+export const { CreateOrder, GetOrders, UpdatedOrders, DeleteOrders, GetDownload } =
   OrderController;
