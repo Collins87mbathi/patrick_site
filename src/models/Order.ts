@@ -29,7 +29,7 @@ const OrderSchema: Schema<IOrder> = new Schema({
     required: true,
   },
   file: {
-    type: String, // or you can use Buffer if you want to store file contents in the database
+    type: String,
   },
   isComplete: {
     type: Boolean,
